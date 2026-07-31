@@ -6,19 +6,19 @@ export function Scoreboard() {
 
   if (teams.length === 0) {
     return (
-      <div className="px-6 py-3 font-body text-sm text-white/40 bg-ink-deep/60">
+      <div className="px-6 py-2 font-body text-sm text-yellow/40 bg-black/20">
         No teams yet — head to Setup to add teams.
       </div>
     )
   }
 
   return (
-    <div className="flex flex-wrap gap-3 px-6 py-3 bg-ink-deep/60">
+    <div className="flex flex-wrap gap-3 px-6 py-2 bg-black/20">
       {teams.map((team, i) => (
         <div
           key={team.id}
           className={`flex items-baseline gap-2 px-4 py-1.5 rounded-full text-sm font-body font-semibold ${
-            i === 0 ? 'bg-gold text-ink-deep' : 'bg-white/10 text-white'
+            i === 0 ? 'bg-yellow text-ink' : 'bg-yellow/10 text-yellow'
           }`}
         >
           <span>{team.name}</span>

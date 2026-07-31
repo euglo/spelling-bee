@@ -6,28 +6,26 @@
   --font-body: 'Figtree', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
-  /* board canvas */
-  --color-ink: #0e1233;
-  --color-ink-deep: #05061a;
+  /* Bee Movie palette: yellow dominant, black text/structure */
+  --color-yellow: #f5c518; /* dominant page background + bee-yellow numerals */
+  --color-ink: #1a1710; /* primary text, Round 1 tiles, nav bar */
+  --color-ink-deep: #0b0904; /* true black — modal spotlight backdrop only */
 
   /* host card / printed answer key */
   --color-paper: #f8efdd;
   --color-paper-line: #d8c9a8;
 
-  /* universal reward accent */
-  --color-gold: #f5b841;
-
   /* round identity accents */
-  --color-honey: #e2711d;
-  --color-violet: #5b3df0;
+  --color-honey: #b5650a; /* Round 1 detail accent — warm amber */
+  --color-violet: #6c3ce9; /* Round 2 accent — yellow's complement */
 
   /* status */
-  --color-correct: #35c078;
-  --color-buzz: #e5442e;
+  --color-buzz: #c81e3a;
 }
 
 body {
   margin: 0;
-  background: var(--color-ink);
+  background: var(--color-yellow);
   font-family: var(--font-body);
+  color: var(--color-ink);
 }

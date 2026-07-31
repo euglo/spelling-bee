@@ -11,7 +11,6 @@ function setSharedEnabled(v: boolean) {
 }
 
 function beep(freq: number, duration: number) {
-  if (!sharedEnabled) return
   const ctx = new AudioContext()
   const osc = ctx.createOscillator()
   const gain = ctx.createGain()
@@ -25,12 +24,48 @@ function beep(freq: number, duration: number) {
   osc.onended = () => ctx.close()
 }
 
+interface SoundManifest {
+  correct: string[]
+  incorrect: string[]
+}
+
+// Cached for the session — edit public/sounds/manifest.json and refresh to pick up changes.
+let manifestPromise: Promise<SoundManifest | null> | null = null
+
+function loadManifest(): Promise<SoundManifest | null> {
+  if (!manifestPromise) {
+    manifestPromise = fetch('/sounds/manifest.json')
+      .then((res) => (res.ok ? (res.json() as Promise<SoundManifest>) : null))
+      .catch(() => null)
+  }
+  return manifestPromise
+}
+
+function pickRandom<T>(items: T[]): T | undefined {
+  if (items.length === 0) return undefined
+  return items[Math.floor(Math.random() * items.length)]
+}
+
+async function playCustomOrFallback(category: 'correct' | 'incorrect', fallback: () => void) {
+  if (!sharedEnabled) return
+
+  const manifest = await loadManifest()
+  const file = pickRandom(manifest?.[category] ?? [])
+  if (!file) {
+    fallback()
+    return
+  }
+
+  const audio = new Audio(`/sounds/${category}/${file}`)
+  audio.play().catch(() => fallback())
+}
+
 export function playCorrectSound() {
-  beep(880, 0.25)
+  playCustomOrFallback('correct', () => beep(880, 0.25))
 }
 
 export function playIncorrectSound() {
-  beep(160, 0.4)
+  playCustomOrFallback('incorrect', () => beep(160, 0.4))
 }
 
 export function useSoundEnabled() {

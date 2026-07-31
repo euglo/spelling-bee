@@ -26,7 +26,8 @@ npm run lint      # oxlint
 ## How the game works
 
 - **Setup tab** — enter team names before playing (add/remove any time, no
-  team limit). Scores persist across both rounds and survive a page refresh
+  team limit). Round 1 and Round 2 stay locked in the nav until at least 2
+  teams exist. Scores persist across both rounds and survive a page refresh
   (stored in the browser's `localStorage`).
 - **Round 1 — Spell the Word**: click a board cell and the team spells the
   word out loud, one letter per person going around the circle. The app never
@@ -38,8 +39,17 @@ npm run lint      # oxlint
 - **Turn order**: whichever team answers a cell correctly picks the next one.
   If nobody gets it, the turn passes to the next team in a fair round-robin
   rotation.
+- **Clicked the wrong tile?** Click the ✕ in the clue popup, or click outside
+  it, to back out without resolving anything — the tile stays playable.
+- **Undo**: the single most-recently-resolved tile shows an "Undo" tile
+  instead of the usual done checkmark. Clicking it reverses the points and
+  restores whichever team's turn it was before that resolution. Only the
+  latest resolution is undoable — resolving another tile supersedes it.
 - Scores accumulate across both rounds into one running scoreboard, always
   visible at the top of the screen.
+- **Reset** (top-right of the nav, on every page) clears every team, score,
+  and answered tile after a confirmation prompt, and returns to Setup. Handy
+  for testing or starting a fresh game.
 
 ## Editing questions/words
 
@@ -99,26 +109,54 @@ into by accident during a game:
 Both are generated straight from the same JSON files, so there's only one
 source of truth to keep updated.
 
+## Custom sound effects
+
+Drop your own audio files in `public/sounds/correct/` and
+`public/sounds/incorrect/`, then list the filenames in
+`public/sounds/manifest.json`:
+
+```json
+{
+  "correct": ["ding.mp3", "tada.mp3", "cheer.mp3"],
+  "incorrect": ["buzzer.mp3"]
+}
+```
+
+Every time a team gets a cell right, the app plays a random file from
+`correct`; every "Nobody got it" plays a random one from `incorrect` — so
+with a few files in each category, it won't play the exact same sound twice
+in a row. Any browser-playable audio format works (mp3, wav, ogg). Edit the
+manifest and refresh the browser — no rebuild needed, same as the game
+content.
+
+If a category is empty (or a listed file fails to load), that event falls
+back to a plain synthesized beep, so the app always makes *some* sound
+without requiring you to supply files first. Mute everything with the
+speaker icon in the nav bar.
+
 ## Tech stack
 
 - React + TypeScript + Vite
 - React Router (`/setup`, `/round-1`, `/round-2`, plus the two answer-key
   routes)
 - Tailwind CSS (retro Jeopardy blue/gold theme, defined in `src/index.css`)
-- Framer Motion for the tile reveal animation
-- Sound effects are synthesized beeps via the Web Audio API (no audio
-  files) — toggle with the speaker icon in the top-right of the nav bar
+- Framer Motion for tile hover/tap and reveal animations
+- Sound effects are your own uploaded audio files, randomly chosen per event
+  (see above), with a synthesized Web Audio beep as fallback — toggle with
+  the speaker icon in the top-right of the nav bar
 
 ## Project structure
 
 ```
 src/
-  routes/          Setup, Round1Board, Round2Board, AnswerKey
-  components/       Layout, Scoreboard, JeopardyBoard, Cell, ResolvePanel
-  state/            GameStateContext — teams, scores, turn order, cell state
+  routes/           Setup, Round1Board, Round2Board, AnswerKey
+  components/       Layout, RequireTeams, Scoreboard, JeopardyBoard, Cell, ResolvePanel
+  state/            GameStateContext — teams, scores, turn order, cell state, undo
   hooks/            useBoardData (fetches round JSON), useSound
   types/            Board/cell shapes, game state shapes
-public/data/       round1.json, round2.json — the editable game content
+public/
+  data/             round1.json, round2.json — the editable game content
+  sounds/           manifest.json, correct/, incorrect/ — your uploaded sound effects
 ```
 
 ## Known limitations

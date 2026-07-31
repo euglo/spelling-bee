@@ -5,7 +5,7 @@ import { cellKey } from '../types/game'
 const STORAGE_KEY = 'spelling-bee-game-state-v1'
 
 function emptyRoundState(): RoundState {
-  return { cells: {}, currentPickerTeamId: null, rotationIndex: 0 }
+  return { cells: {}, currentPickerTeamId: null, rotationIndex: 0, lastResolvedKey: null }
 }
 
 function loadInitialState(): GameState {
@@ -24,6 +24,7 @@ interface GameStateContextValue {
   removeTeam: (id: string) => void
   renameTeam: (id: string, name: string) => void
   selectCell: (round: RoundId, categoryIndex: number, cellIndex: number) => void
+  cancelCell: (round: RoundId, categoryIndex: number, cellIndex: number) => void
   resolveCell: (
     round: RoundId,
     categoryIndex: number,
@@ -31,6 +32,7 @@ interface GameStateContextValue {
     points: number,
     winningTeamId: string | null,
   ) => void
+  undoLastResolved: (round: RoundId) => void
   resetGame: () => void
 }
 
@@ -78,6 +80,16 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     })
   }
 
+  const cancelCell = (round: RoundId, categoryIndex: number, cellIndex: number) => {
+    setState((prev) => {
+      const key = cellKey(categoryIndex, cellIndex)
+      const roundState = prev[round]
+      if (roundState.cells[key]?.status !== 'in-play') return prev
+      const { [key]: _removed, ...rest } = roundState.cells
+      return { ...prev, [round]: { ...roundState, cells: rest } }
+    })
+  }
+
   const resolveCell = (
     round: RoundId,
     categoryIndex: number,
@@ -107,9 +119,49 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
         teams,
         [round]: {
           ...roundState,
-          cells: { ...roundState.cells, [key]: { status: 'resolved', wonBy: winningTeamId } },
+          cells: {
+            ...roundState.cells,
+            [key]: {
+              status: 'resolved',
+              wonBy: winningTeamId,
+              points,
+              prevPickerTeamId: roundState.currentPickerTeamId,
+              prevRotationIndex: roundState.rotationIndex,
+            },
+          },
           currentPickerTeamId: nextPicker,
           rotationIndex: nextRotationIndex,
+          lastResolvedKey: key,
+        },
+      }
+    })
+  }
+
+  const undoLastResolved = (round: RoundId) => {
+    setState((prev) => {
+      const roundState = prev[round]
+      const key = roundState.lastResolvedKey
+      if (!key) return prev
+      const resolution = roundState.cells[key]
+      if (!resolution || resolution.status !== 'resolved') return prev
+
+      const { [key]: _removed, ...restCells } = roundState.cells
+      const teams =
+        resolution.wonBy && resolution.points
+          ? prev.teams.map((t) =>
+              t.id === resolution.wonBy ? { ...t, score: t.score - resolution.points! } : t,
+            )
+          : prev.teams
+
+      return {
+        ...prev,
+        teams,
+        [round]: {
+          ...roundState,
+          cells: restCells,
+          currentPickerTeamId: resolution.prevPickerTeamId ?? null,
+          rotationIndex: resolution.prevRotationIndex ?? 0,
+          lastResolvedKey: null,
         },
       }
     })
@@ -121,7 +173,17 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 
   return (
     <GameStateContext.Provider
-      value={{ state, addTeam, removeTeam, renameTeam, selectCell, resolveCell, resetGame }}
+      value={{
+        state,
+        addTeam,
+        removeTeam,
+        renameTeam,
+        selectCell,
+        cancelCell,
+        resolveCell,
+        undoLastResolved,
+        resetGame,
+      }}
     >
       {children}
     </GameStateContext.Provider>
