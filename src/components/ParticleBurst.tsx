@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { SparkleIcon } from './SparkleIcon'
 
 const PARTICLE_COUNT = 130
 
@@ -36,22 +37,6 @@ function makeParticles(colors: string[]): Particle[] {
       isStar: i % 2 === 0,
     }
   })
-}
-
-function SparkleIcon({ size, color }: { size: number; color: string }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      style={{ filter: `drop-shadow(0 0 3px ${color})` }}
-    >
-      <path
-        d="M12 0 L14.6 9.4 L24 12 L14.6 14.6 L12 24 L9.4 14.6 L0 12 L9.4 9.4 Z"
-        fill={color}
-      />
-    </svg>
-  )
 }
 
 interface ParticleBurstProps {

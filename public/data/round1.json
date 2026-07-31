@@ -3,41 +3,41 @@
     {
       "name": "California",
       "cells": [
-        { "points": 100, "word": "Anaheim", "hint": "Home to Disneyland" },
-        { "points": 200, "word": "Sacramento", "hint": "The state capital" },
-        { "points": 300, "word": "Temecula", "hint": "A city known for wineries in Riverside County" },
-        { "points": 400, "word": "Yosemite", "hint": "A national park famous for granite cliffs" },
-        { "points": 500, "word": "Sequoia", "hint": "Named after the giant trees found there" }
+        { "points": 100, "word": "Walnut", "hint": "A nut often associated with California orchards" },
+        { "points": 200, "word": "Temecula", "hint": "A Riverside County city known for wineries" },
+        { "points": 300, "word": "Monterey", "hint": "A coastal city famous for its bay and aquarium" },
+        { "points": 400, "word": "Mount Tamalpais", "hint": "A mountain near San Francisco with a famous name" },
+        { "points": 500, "word": "San Bernardino", "hint": "An inland city in Southern California" }
       ]
     },
     {
-      "name": "Animals",
+      "name": "Cultural Cuisine",
       "cells": [
-        { "points": 100, "word": "Giraffe", "hint": "The tallest living land animal" },
-        { "points": 200, "word": "Penguin", "hint": "A flightless bird that swims" },
-        { "points": 300, "word": "Kangaroo", "hint": "An Australian marsupial that hops" },
-        { "points": 400, "word": "Chimpanzee", "hint": "A great ape closely related to humans" },
-        { "points": 500, "word": "Rhinoceros", "hint": "A large animal with one or two horns on its snout" }
+        { "points": 100, "word": "Gelato", "hint": "An Italian frozen dessert" },
+        { "points": 200, "word": "Gnocchi", "hint": "Small Italian potato dumplings" },
+        { "points": 300, "word": "Tzatziki", "hint": "A cool cucumber-yogurt sauce" },
+        { "points": 400, "word": "Worcestershire", "hint": "A tangy sauce used in dressings and marinades" },
+        { "points": 500, "word": "Gochujang", "hint": "A Korean chili paste with a deep umami kick" }
       ]
     },
     {
-      "name": "Food",
+      "name": "Alcohols",
       "cells": [
-        { "points": 100, "word": "Burrito", "hint": "A wrapped tortilla dish" },
-        { "points": 200, "word": "Spaghetti", "hint": "Long thin pasta" },
-        { "points": 300, "word": "Guacamole", "hint": "An avocado-based dip" },
-        { "points": 400, "word": "Croissant", "hint": "A flaky buttery French pastry" },
-        { "points": 500, "word": "Quesadilla", "hint": "A grilled tortilla filled with cheese" }
+        { "points": 100, "word": "Aperol", "hint": "A bright orange Italian aperitivo" },
+        { "points": 200, "word": "Tequila", "hint": "A distilled spirit from Mexico" },
+        { "points": 300, "word": "Curacao", "hint": "An orange-flavored liqueur with a Caribbean name" },
+        { "points": 400, "word": "Vermouth", "hint": "A fortified wine often used in cocktails" },
+        { "points": 500, "word": "Maraschino", "hint": "A cherry liqueur with a very fancy name" }
       ]
     },
     {
-      "name": "Space",
+      "name": "New York",
       "cells": [
-        { "points": 100, "word": "Comet", "hint": "An icy body that grows a tail near the sun" },
-        { "points": 200, "word": "Asteroid", "hint": "A rocky body orbiting the sun, smaller than a planet" },
-        { "points": 300, "word": "Galaxy", "hint": "A huge collection of stars, like the Milky Way" },
-        { "points": 400, "word": "Telescope", "hint": "An instrument used to view distant objects" },
-        { "points": 500, "word": "Constellation", "hint": "A recognized pattern of stars" }
+        { "points": 100, "word": "Houston Street", "hint": "A famous Manhattan street in lower Manhattan" },
+        { "points": 200, "word": "Hoboken", "hint": "A New Jersey city across the Hudson from Manhattan" },
+        { "points": 300, "word": "LaGuardia", "hint": "A major New York City airport" },
+        { "points": 400, "word": "Chrysler Building", "hint": "A landmark Art Deco skyscraper in Midtown" },
+        { "points": 500, "word": "Weehawken", "hint": "A New Jersey waterfront town tied to a famous duel" }
       ]
     }
   ]

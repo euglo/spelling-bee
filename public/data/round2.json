@@ -1,43 +1,43 @@
 {
   "categories": [
     {
-      "name": "Science",
+      "name": "Celebrities & Pop Culture",
       "cells": [
-        { "points": 100, "clue": "This gas makes up about 78% of Earth's atmosphere.", "answer": "Nitrogen" },
-        { "points": 200, "clue": "This is known as the powerhouse of the cell.", "answer": "Mitochondria" },
-        { "points": 300, "clue": "The force that pulls objects toward the center of the Earth.", "answer": "Gravity" },
-        { "points": 400, "clue": "The chemical symbol Au represents this precious metal.", "answer": "Gold" },
-        { "points": 500, "clue": "The process by which plants convert sunlight into energy.", "answer": "Photosynthesis" }
+        { "points": 100, "clue": "The NBA star nicknamed the Greek Freak.", "answer": "Giannis Antetokounmpo" },
+        { "points": 200, "clue": "The actor who played Spider-Man in the early 2000s films.", "answer": "Tobey Maguire" },
+        { "points": 300, "clue": "The action star who once served as governor of California.", "answer": "Arnold Schwarzenegger" },
+        { "points": 400, "clue": "The filmmaker behind Pulp Fiction and Reservoir Dogs.", "answer": "Quentin Tarantino" },
+        { "points": 500, "clue": "The Serbian NBA guard known for his deep three-point shooting.", "answer": "Bogdan Bogdanović" }
       ]
     },
     {
-      "name": "Geography",
+      "name": "Grab Bag",
       "cells": [
-        { "points": 100, "clue": "The largest ocean on Earth.", "answer": "Pacific" },
-        { "points": 200, "clue": "The longest river in the world.", "answer": "Nile" },
-        { "points": 300, "clue": "This country is both a continent and an island.", "answer": "Australia" },
-        { "points": 400, "clue": "The smallest country in the world by area.", "answer": "Vatican" },
-        { "points": 500, "clue": "This mountain range separates Europe and Asia.", "answer": "Ural" }
+        { "points": 100, "clue": "A fierce fighter usually found in the jungle.", "answer": "Guerrilla" },
+        { "points": 200, "clue": "You will usually find this completely still on a desk.", "answer": "Stationery" },
+        { "points": 300, "clue": "A word meaning subtle, unobtrusive, or low-key.", "answer": "Discreet" },
+        { "points": 400, "clue": "It can make things better.", "answer": "Complement" },
+        { "points": 500, "clue": "A word meaning to provoke or irritate.", "answer": "Pique" }
       ]
     },
     {
-      "name": "Movies",
+      "name": "New York Names",
       "cells": [
-        { "points": 100, "clue": "The clownfish father searching for his son in this Pixar film.", "answer": "Nemo" },
-        { "points": 200, "clue": "The wizarding school attended by Harry Potter.", "answer": "Hogwarts" },
-        { "points": 300, "clue": "The alien who just wants to phone home.", "answer": "ET" },
-        { "points": 400, "clue": "The shark movie that made people afraid of the ocean.", "answer": "Jaws" },
-        { "points": 500, "clue": "The fictional African nation ruled by the Black Panther.", "answer": "Wakanda" }
+        { "points": 100, "clue": "The former New York governor who later ran for mayor.", "answer": "Andrew Cuomo" },
+        { "points": 200, "clue": "The Democratic mayoral nominee who made headlines in New York politics.", "answer": "Zohran Mamdani" },
+        { "points": 300, "clue": "The former New York City mayor known for the 9/11 era.", "answer": "Rudy Giuliani" },
+        { "points": 400, "clue": "A New York place name tied to a Polish-American hero.", "answer": "Kosciuszko" },
+        { "points": 500, "clue": "The bridge and explorer whose name appears in New York geography.", "answer": "Verrazzano" }
       ]
     },
     {
-      "name": "History",
+      "name": "Miscellaneous",
       "cells": [
-        { "points": 100, "clue": "The ship that sank in the North Atlantic in 1912.", "answer": "Titanic" },
-        { "points": 200, "clue": "The wall that divided a German city until 1989.", "answer": "Berlin" },
-        { "points": 300, "clue": "The ancient Egyptian writing system that used pictures.", "answer": "Hieroglyphics" },
-        { "points": 400, "clue": "The document signed in 1776 declaring American independence.", "answer": "Declaration" },
-        { "points": 500, "clue": "The empire ruled by Julius Caesar.", "answer": "Rome" }
+        { "points": 100, "clue": "A buttery nut often used in cookies and candies.", "answer": "Macadamia" },
+        { "points": 200, "clue": "A candy made with nuts and caramelized sugar.", "answer": "Praline" },
+        { "points": 300, "clue": "An Italian cured ham often served thinly sliced.", "answer": "Prosciutto" },
+        { "points": 400, "clue": "A frozen dessert that is often fruit-based and lighter than ice cream.", "answer": "Sorbet" },
+        { "points": 500, "clue": "Stacking wooden dolls that nest inside one another.", "answer": "Matryoshka dolls" }
       ]
     }
   ]

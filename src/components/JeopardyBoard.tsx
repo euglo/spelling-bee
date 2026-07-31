@@ -7,7 +7,9 @@ import { cellKey } from '../types/game'
 import { Cell } from './Cell'
 import { ResolvePanel } from './ResolvePanel'
 import { ParticleBurst } from './ParticleBurst'
-import { RainbowShower } from './RainbowShower'
+import { EmojiShower } from './EmojiShower'
+import { VortexPullIn } from './VortexPullIn'
+import { BeeSwarm } from './BeeSwarm'
 import { pickTileAnimation } from '../lib/tileAnimations'
 import { pickParticleEffect } from '../lib/particleEffects'
 import { playOpenSound } from '../hooks/useSound'
@@ -154,8 +156,12 @@ export function JeopardyBoard<TCell extends CellLike>({
               particleEffect &&
               (particleEffect.kind === 'radial' ? (
                 <ParticleBurst key={`particles-${modalKey}`} colors={particleEffect.colors} />
+              ) : particleEffect.kind === 'emoji-shower' ? (
+                <EmojiShower key={`particles-${modalKey}`} emoji={particleEffect.emoji} />
+              ) : particleEffect.kind === 'vortex-pull-in' ? (
+                <VortexPullIn key={`particles-${modalKey}`} colors={particleEffect.colors} />
               ) : (
-                <RainbowShower key={`particles-${modalKey}`} />
+                <BeeSwarm key={`particles-${modalKey}`} />
               ))}
             <motion.div
               key={modalKey}
