@@ -36,6 +36,10 @@ npm run lint      # oxlint
 - **Round 2 — Spell the Answer**: click a cell to reveal the clue to
   everyone, exactly like Jeopardy. The team must say (and spell) the correct
   answer; the host judges and clicks the winning team, or "Nobody got it."
+- **Reveal**: after judging a tile, the popup switches to show the correct
+  word/answer plus who got it (or "Nobody got it") before you continue —
+  useful in Round 1 especially, since that's the one round where the word is
+  never shown beforehand.
 - **Turn order**: whichever team answers a cell correctly picks the next one.
   If nobody gets it, the turn passes to the next team in a fair round-robin
   rotation.
@@ -111,36 +115,50 @@ source of truth to keep updated.
 
 ## Custom sound effects
 
-Drop your own audio files in `public/sounds/correct/` and
-`public/sounds/incorrect/`, then list the filenames in
-`public/sounds/manifest.json`:
+Drop your own audio files in `public/sounds/correct/`,
+`public/sounds/incorrect/`, and `public/sounds/open/`, then list the
+filenames in `public/sounds/manifest.json`:
 
 ```json
 {
   "correct": ["ding.mp3", "tada.mp3", "cheer.mp3"],
-  "incorrect": ["buzzer.mp3"]
+  "incorrect": ["buzzer.mp3"],
+  "open": ["whoosh.mp3", "boing.mp3"]
 }
 ```
 
-Every time a team gets a cell right, the app plays a random file from
-`correct`; every "Nobody got it" plays a random one from `incorrect` — so
-with a few files in each category, it won't play the exact same sound twice
-in a row. Any browser-playable audio format works (mp3, wav, ogg). Edit the
-manifest and refresh the browser — no rebuild needed, same as the game
-content.
+- `correct` plays when a team gets a tile right
+- `incorrect` plays on "Nobody got it"
+- `open` plays the instant a tile is clicked, timed with the tile's opening
+  animation (see below)
+
+Each event picks a random file from its category — so with a few files per
+category, it won't play the exact same sound twice in a row. Any
+browser-playable audio format works (mp3, wav, ogg). Edit the manifest and
+refresh the browser — no rebuild needed, same as the game content.
 
 If a category is empty (or a listed file fails to load), that event falls
 back to a plain synthesized beep, so the app always makes *some* sound
 without requiring you to supply files first. Mute everything with the
 speaker icon in the nav bar.
 
+## Tile opening animation
+
+When a tile is clicked, the clue card spirals in (`src/lib/tileAnimations.ts`)
+before showing the prompt. It's built as a pool of variants with one randomly
+picked per click — same pattern as the sound effects — currently trimmed
+down to a single "spiral-in" animation while more get designed. Add more
+entries to the `TILE_ANIMATIONS` array to bring back variety.
+
 ## Tech stack
 
 - React + TypeScript + Vite
 - React Router (`/setup`, `/round-1`, `/round-2`, plus the two answer-key
   routes)
-- Tailwind CSS (retro Jeopardy blue/gold theme, defined in `src/index.css`)
-- Framer Motion for tile hover/tap and reveal animations
+- Tailwind CSS (Bee Movie–themed yellow/black palette, defined in
+  `src/index.css`)
+- Framer Motion for tile hover/tap, the clue card's opening animation, and
+  the reveal pop
 - Sound effects are your own uploaded audio files, randomly chosen per event
   (see above), with a synthesized Web Audio beep as fallback — toggle with
   the speaker icon in the top-right of the nav bar
@@ -153,10 +171,11 @@ src/
   components/       Layout, RequireTeams, Scoreboard, JeopardyBoard, Cell, ResolvePanel
   state/            GameStateContext — teams, scores, turn order, cell state, undo
   hooks/            useBoardData (fetches round JSON), useSound
+  lib/              tileAnimations — pool of randomized clue-card entrance animations
   types/            Board/cell shapes, game state shapes
 public/
   data/             round1.json, round2.json — the editable game content
-  sounds/           manifest.json, correct/, incorrect/ — your uploaded sound effects
+  sounds/           manifest.json, correct/, incorrect/, open/ — your uploaded sound effects
 ```
 
 ## Known limitations

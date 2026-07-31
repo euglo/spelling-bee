@@ -24,10 +24,9 @@ function beep(freq: number, duration: number) {
   osc.onended = () => ctx.close()
 }
 
-interface SoundManifest {
-  correct: string[]
-  incorrect: string[]
-}
+type SoundCategory = 'correct' | 'incorrect' | 'open'
+
+type SoundManifest = Record<SoundCategory, string[]>
 
 // Cached for the session — edit public/sounds/manifest.json and refresh to pick up changes.
 let manifestPromise: Promise<SoundManifest | null> | null = null
@@ -46,7 +45,7 @@ function pickRandom<T>(items: T[]): T | undefined {
   return items[Math.floor(Math.random() * items.length)]
 }
 
-async function playCustomOrFallback(category: 'correct' | 'incorrect', fallback: () => void) {
+async function playCustomOrFallback(category: SoundCategory, fallback: () => void) {
   if (!sharedEnabled) return
 
   const manifest = await loadManifest()
@@ -66,6 +65,10 @@ export function playCorrectSound() {
 
 export function playIncorrectSound() {
   playCustomOrFallback('incorrect', () => beep(160, 0.4))
+}
+
+export function playOpenSound() {
+  playCustomOrFallback('open', () => beep(500, 0.15))
 }
 
 export function useSoundEnabled() {
