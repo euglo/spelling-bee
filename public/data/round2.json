@@ -1,0 +1,44 @@
+{
+  "categories": [
+    {
+      "name": "Science",
+      "cells": [
+        { "points": 100, "clue": "This gas makes up about 78% of Earth's atmosphere.", "answer": "Nitrogen" },
+        { "points": 200, "clue": "This is known as the powerhouse of the cell.", "answer": "Mitochondria" },
+        { "points": 300, "clue": "The force that pulls objects toward the center of the Earth.", "answer": "Gravity" },
+        { "points": 400, "clue": "The chemical symbol Au represents this precious metal.", "answer": "Gold" },
+        { "points": 500, "clue": "The process by which plants convert sunlight into energy.", "answer": "Photosynthesis" }
+      ]
+    },
+    {
+      "name": "Geography",
+      "cells": [
+        { "points": 100, "clue": "The largest ocean on Earth.", "answer": "Pacific" },
+        { "points": 200, "clue": "The longest river in the world.", "answer": "Nile" },
+        { "points": 300, "clue": "This country is both a continent and an island.", "answer": "Australia" },
+        { "points": 400, "clue": "The smallest country in the world by area.", "answer": "Vatican" },
+        { "points": 500, "clue": "This mountain range separates Europe and Asia.", "answer": "Ural" }
+      ]
+    },
+    {
+      "name": "Movies",
+      "cells": [
+        { "points": 100, "clue": "The clownfish father searching for his son in this Pixar film.", "answer": "Nemo" },
+        { "points": 200, "clue": "The wizarding school attended by Harry Potter.", "answer": "Hogwarts" },
+        { "points": 300, "clue": "The alien who just wants to phone home.", "answer": "ET" },
+        { "points": 400, "clue": "The shark movie that made people afraid of the ocean.", "answer": "Jaws" },
+        { "points": 500, "clue": "The fictional African nation ruled by the Black Panther.", "answer": "Wakanda" }
+      ]
+    },
+    {
+      "name": "History",
+      "cells": [
+        { "points": 100, "clue": "The ship that sank in the North Atlantic in 1912.", "answer": "Titanic" },
+        { "points": 200, "clue": "The wall that divided a German city until 1989.", "answer": "Berlin" },
+        { "points": 300, "clue": "The ancient Egyptian writing system that used pictures.", "answer": "Hieroglyphics" },
+        { "points": 400, "clue": "The document signed in 1776 declaring American independence.", "answer": "Declaration" },
+        { "points": 500, "clue": "The empire ruled by Julius Caesar.", "answer": "Rome" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "categories": [
+    {
+      "name": "California",
+      "cells": [
+        { "points": 100, "word": "Anaheim", "hint": "Home to Disneyland" },
+        { "points": 200, "word": "Sacramento", "hint": "The state capital" },
+        { "points": 300, "word": "Temecula", "hint": "A city known for wineries in Riverside County" },
+        { "points": 400, "word": "Yosemite", "hint": "A national park famous for granite cliffs" },
+        { "points": 500, "word": "Sequoia", "hint": "Named after the giant trees found there" }
+      ]
+    },
+    {
+      "name": "Animals",
+      "cells": [
+        { "points": 100, "word": "Giraffe", "hint": "The tallest living land animal" },
+        { "points": 200, "word": "Penguin", "hint": "A flightless bird that swims" },
+        { "points": 300, "word": "Kangaroo", "hint": "An Australian marsupial that hops" },
+        { "points": 400, "word": "Chimpanzee", "hint": "A great ape closely related to humans" },
+        { "points": 500, "word": "Rhinoceros", "hint": "A large animal with one or two horns on its snout" }
+      ]
+    },
+    {
+      "name": "Food",
+      "cells": [
+        { "points": 100, "word": "Burrito", "hint": "A wrapped tortilla dish" },
+        { "points": 200, "word": "Spaghetti", "hint": "Long thin pasta" },
+        { "points": 300, "word": "Guacamole", "hint": "An avocado-based dip" },
+        { "points": 400, "word": "Croissant", "hint": "A flaky buttery French pastry" },
+        { "points": 500, "word": "Quesadilla", "hint": "A grilled tortilla filled with cheese" }
+      ]
+    },
+    {
+      "name": "Space",
+      "cells": [
+        { "points": 100, "word": "Comet", "hint": "An icy body that grows a tail near the sun" },
+        { "points": 200, "word": "Asteroid", "hint": "A rocky body orbiting the sun, smaller than a planet" },
+        { "points": 300, "word": "Galaxy", "hint": "A huge collection of stars, like the Milky Way" },
+        { "points": 400, "word": "Telescope", "hint": "An instrument used to view distant objects" },
+        { "points": 500, "word": "Constellation", "hint": "A recognized pattern of stars" }
+      ]
+    }
+  ]
+}

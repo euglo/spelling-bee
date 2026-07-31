@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* board canvas */
+  --color-ink: #0e1233;
+  --color-ink-deep: #05061a;
+
+  /* host card / printed answer key */
+  --color-paper: #f8efdd;
+  --color-paper-line: #d8c9a8;
+
+  /* universal reward accent */
+  --color-gold: #f5b841;
+
+  /* round identity accents */
+  --color-honey: #e2711d;
+  --color-violet: #5b3df0;
+
+  /* status */
+  --color-correct: #35c078;
+  --color-buzz: #e5442e;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  font-family: var(--font-body);
+}
