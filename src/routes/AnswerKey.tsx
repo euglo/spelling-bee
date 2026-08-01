@@ -61,6 +61,11 @@ export function AnswerKey({ round }: AnswerKeyProps) {
                           {r2.media?.type === 'external' && (
                             <span className="font-bold text-buzz">
                               [OTHER SCREEN{r2.media.label ? `: ${r2.media.label}` : ''}]{' '}
+                              {r2.media.hostNote && (
+                                <span className="font-normal text-ink-deep/70">
+                                  ({r2.media.hostNote})
+                                </span>
+                              )}{' '}
                             </span>
                           )}
                           {r2.clue}

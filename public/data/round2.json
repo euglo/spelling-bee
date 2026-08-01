@@ -1,92 +1,270 @@
 {
   "categories": [
     {
-      "name": "Celebrities & Pop Culture",
+      "name": "Ball Knowledge",
       "cells": [
-        { "points": 200, "clue": "The NBA star nicknamed the Greek Freak.", "answer": "Giannis Antetokounmpo" },
-        { "points": 400, "clue": "The actor who played Spider-Man in the early 2000s films.", "answer": "Tobey Maguire" },
-        { "points": 600, "clue": "The action star who once served as governor of California.", "answer": "Arnold Schwarzenegger" },
-        { "points": 800, "clue": "The filmmaker behind Pulp Fiction and Reservoir Dogs.", "answer": "Quentin Tarantino" },
-        {
-          "points": 1000,
-          "clue": "The Serbian NBA guard known for his deep three-point shooting.",
-          "answer": "Bogdan Bogdanović",
-          "media": { "type": "external", "label": "Highlight reel — play from the host device" }
-        }
+        { "points": 83, "clue": "", "answer": "Bam Adebayo", "media": { "type": "external" } },
+        { "points": 100, "clue": "", "answer": "Victor Wembanyama", "media": { "type": "external" } },
+        { "points": 200, "clue": "", "answer": "Giannis Antetokounmpo", "media": { "type": "external" } },
+        { "points": 300, "clue": "", "answer": "Hakeem Olajuwon", "media": { "type": "external" } },
+        { "points": 400, "clue": "", "answer": "Kristaps Porziņģis", "media": { "type": "external" } },
+        { "points": 500, "clue": "", "answer": "Dirk Nowitzki", "media": { "type": "external" } },
+        { "points": 600, "clue": "", "answer": "Shai Gilgeous-Alexander", "media": { "type": "external" } }
       ]
     },
     {
-      "name": "Grab Bag",
-      "cells": [
-        { "points": 200, "clue": "A fierce fighter usually found in the jungle.", "answer": "Guerrilla" },
-        { "points": 400, "clue": "You will usually find this completely still on a desk.", "answer": "Stationery" },
-        { "points": 600, "clue": "A word meaning subtle, unobtrusive, or low-key.", "answer": "Discreet" },
-        { "points": 800, "clue": "It can make things better.", "answer": "Complement", "daily": true },
-        { "points": 1000, "clue": "A word meaning to provoke or irritate.", "answer": "Pique" }
-      ]
-    },
-    {
-      "name": "New York Names",
-      "cells": [
-        { "points": 200, "clue": "The former New York governor who later ran for mayor.", "answer": "Andrew Cuomo" },
-        { "points": 400, "clue": "The Democratic mayoral nominee who made headlines in New York politics.", "answer": "Zohran Mamdani" },
-        { "points": 600, "clue": "The former New York City mayor known for the 9/11 era.", "answer": "Rudy Giuliani" },
-        { "points": 800, "clue": "A New York place name tied to a Polish-American hero.", "answer": "Kosciuszko" },
-        { "points": 1000, "clue": "The bridge and explorer whose name appears in New York geography.", "answer": "Verrazzano" }
-      ]
-    },
-    {
-      "name": "Miscellaneous",
-      "cells": [
-        { "points": 200, "clue": "A buttery nut often used in cookies and candies.", "answer": "Macadamia" },
-        { "points": 400, "clue": "A candy made with nuts and caramelized sugar.", "answer": "Praline" },
-        { "points": 600, "clue": "An Italian cured ham often served thinly sliced.", "answer": "Prosciutto" },
-        { "points": 800, "clue": "A frozen dessert that is often fruit-based and lighter than ice cream.", "answer": "Sorbet" },
-        { "points": 1000, "clue": "Stacking wooden dolls that nest inside one another.", "answer": "Matryoshka dolls" }
-      ]
-    },
-    {
-      "name": "California Landmarks",
+      "name": "California",
       "cells": [
         {
-          "points": 200,
-          "clue": "Spell the name of this San Francisco chocolate landmark.",
-          "answer": "Ghirardelli Square",
-          "media": {
-            "type": "image",
-            "src": "/images/round2/ghirardelli-square.png",
-            "caption": "San Francisco"
-          }
+          "points": 100,
+          "clue": "Spell the name of this coastal city famous for its bay and aquarium.",
+          "answer": "Monterey",
+          "media": { "type": "image", "src": "/images/round2/monterey.jpg" }
         },
         {
-          "points": 400,
+          "points": 200,
+          "clue": "Spell the name of this inland Southern California city.",
+          "answer": "San Bernardino",
+          "media": { "type": "image", "src": "/images/round2/san-bernardino.png" }
+        },
+        {
+          "points": 300,
           "clue": "Spell the name of this Central Coast city.",
           "answer": "San Luis Obispo",
           "media": { "type": "image", "src": "/images/round2/san-luis-obispo.png" }
         },
         {
-          "points": 600,
-          "clue": "Spell the name of this Los Angeles drive.",
-          "answer": "Mulholland",
-          "media": {
-            "type": "image",
-            "src": "/images/round2/mulholland.jpeg",
-            "caption": "Los Angeles"
-          }
-        },
-        {
-          "points": 800,
+          "points": 400,
           "clue": "Spell the name of this Inland Empire city.",
           "answer": "Rancho Cucamonga",
           "media": { "type": "image", "src": "/images/round2/rancho-cucamonga.png" }
         },
         {
-          "points": 1000,
-          "clue": "Spell the name of this Sierra Nevada county and river.",
+          "points": 500,
+          "clue": "Spell the name of this famous Los Angeles road.",
+          "answer": "Mulholland Drive",
+          "media": { "type": "image", "src": "/images/round2/mulholland.jpeg" }
+        },
+        {
+          "points": 600,
+          "clue": "Spell the name of this San Francisco chocolate landmark.",
+          "answer": "Ghirardelli Square",
+          "media": { "type": "image", "src": "/images/round2/ghirardelli-square.png" }
+        },
+        {
+          "points": 700,
+          "clue": "Spell the name of this mountain near San Francisco.",
+          "answer": "Mount Tamalpais",
+          "media": { "type": "image", "src": "/images/round2/mount-tamalpais.png" }
+        },
+        {
+          "points": 800,
+          "clue": "Spell the name of this Sierra Nevada county and river, home to Yosemite National Park.",
           "answer": "Tuolumne",
-          "media": { "type": "image", "src": "/images/round2/tuolumne.png" },
-          "daily": true
+          "media": { "type": "image", "src": "/images/round2/tuolumne.png" }
         }
+      ]
+    },
+    {
+      "name": "Celebrities / Pop Culture / Music",
+      "cells": [
+        {
+          "points": 100,
+          "clue": "The Norwegian striker known for his prolific goal-scoring at Manchester City.",
+          "answer": "Erling Haaland"
+        },
+        {
+          "points": 200,
+          "clue": "The actor who played Spider-Man in the early 2000s films.",
+          "answer": "Tobey Maguire"
+        },
+        {
+          "points": 300,
+          "clue": "The filmmaker behind Pulp Fiction and Reservoir Dogs.",
+          "answer": "Quentin Tarantino",
+          "daily": true
+        },
+        {
+          "points": 400,
+          "clue": "The actor known for playing Gus Fring in Breaking Bad.",
+          "answer": "Giancarlo Esposito"
+        },
+        {
+          "points": 500,
+          "clue": "The Oscar-winning actor known for his 'alright, alright, alright' catchphrase.",
+          "answer": "Matthew McConaughey"
+        },
+        {
+          "points": 600,
+          "clue": "The action star who once served as governor of California.",
+          "answer": "Arnold Schwarzenegger"
+        },
+        {
+          "points": 700,
+          "clue": "The comedian known for playing Alan in The Hangover trilogy.",
+          "answer": "Zach Galifianakis"
+        }
+      ]
+    },
+    {
+      "name": "Fashion",
+      "cells": [
+        {
+          "points": 100,
+          "clue": "Spell the name of this Spanish-founded luxury fashion house.",
+          "answer": "Balenciaga",
+          "media": { "type": "image", "src": "/images/round2/balenciaga.png" }
+        },
+        {
+          "points": 200,
+          "clue": "Spell the name of this French fashion house known by the initials YSL.",
+          "answer": "Yves Saint Laurent",
+          "media": { "type": "image", "src": "/images/round2/ysl.png" }
+        },
+        {
+          "points": 300,
+          "clue": "Spell the name of this Austrian company famous for cut crystal and rhinestones.",
+          "answer": "Swarovski",
+          "media": { "type": "image", "src": "/images/round2/swarovski.png" }
+        },
+        {
+          "points": 400,
+          "clue": "Spell the name of this French fashion house founded in 1952.",
+          "answer": "Givenchy",
+          "media": { "type": "image", "src": "/images/round2/givenchy.png" }
+        },
+        {
+          "points": 500,
+          "clue": "Spell the name of this designer famous for red-soled shoes.",
+          "answer": "Christian Louboutin",
+          "media": { "type": "image", "src": "/images/round2/louboutin.png" }
+        },
+        {
+          "points": 600,
+          "clue": "Spell the name of this Spanish luxury fashion house.",
+          "answer": "Loewe",
+          "media": { "type": "image", "src": "/images/round2/loewe.jpg" }
+        }
+      ]
+    },
+    {
+      "name": "New York, New York",
+      "cells": [
+        {
+          "points": 100,
+          "clue": "Spell the name of this landmark Art Deco skyscraper in Midtown Manhattan.",
+          "answer": "Chrysler Building",
+          "media": { "type": "image", "src": "/images/round2/chrysler.jpg" }
+        },
+        {
+          "points": 200,
+          "clue": "Spell the name of this spiral-shaped art museum on Fifth Avenue.",
+          "answer": "Guggenheim",
+          "media": { "type": "image", "src": "/images/round2/guggenheim.jpg" }
+        },
+        {
+          "points": 300,
+          "clue": "Spell the name of this Manhattan neighborhood and elite public high school, named for a Dutch governor.",
+          "answer": "Stuyvesant",
+          "media": { "type": "image", "src": "/images/round2/stuyvesant.png" }
+        },
+        {
+          "points": 400,
+          "clue": "Spell the name of the bridge and explorer whose name appears in New York Harbor.",
+          "answer": "Verrazzano",
+          "media": { "type": "image", "src": "/images/round2/verrazzano.jpeg" }
+        },
+        {
+          "points": 500,
+          "clue": "Spell the name of this Bronx neighborhood where the Harlem River meets the Hudson.",
+          "answer": "Spuyten Duyvil",
+          "media": { "type": "image", "src": "/images/round2/spuyten-duyvil.jpeg" }
+        },
+        {
+          "points": 600,
+          "clue": "Spell the name of this bridge and Polish-American Revolutionary War hero.",
+          "answer": "Kosciuszko",
+          "media": { "type": "image", "src": "/images/round2/kosciuszko.jpg" }
+        }
+      ]
+    },
+    {
+      "name": "New Yorkers",
+      "cells": [
+        {
+          "points": 100,
+          "clue": "",
+          "answer": "Jalen Brunson",
+          "media": {
+            "type": "external",
+            "label": "Video clue",
+            "hostNote": "https://www.youtube.com/watch?v=MALQYLNjVs0"
+          }
+        },
+        {
+          "points": 200,
+          "clue": "",
+          "answer": "Zohran Mamdani",
+          "media": {
+            "type": "external",
+            "label": "Video clue",
+            "hostNote": "https://youtu.be/ciimC-cE_eI&t=298"
+          }
+        },
+        {
+          "points": 300,
+          "clue": "",
+          "answer": "Scarlett Johansson",
+          "media": {
+            "type": "external",
+            "label": "Video clue",
+            "hostNote": "https://www.youtube.com/watch?v=FDFdroN7d0w"
+          }
+        },
+        {
+          "points": 400,
+          "clue": "",
+          "answer": "Timothée Chalamet",
+          "media": { "type": "external", "label": "Video clue" }
+        },
+        {
+          "points": 500,
+          "clue": "",
+          "answer": "Jose Alvarado",
+          "media": {
+            "type": "external",
+            "label": "Video clue",
+            "hostNote": "https://drive.google.com/file/d/1L_CK_Nu1Ou1TkHe_yNEXc2tEktZkncdD/view?usp=sharing"
+          }
+        },
+        {
+          "points": 600,
+          "clue": "",
+          "answer": "OG Anunoby",
+          "daily": true,
+          "media": { "type": "external", "label": "Video clue", "hostNote": "MP4 file" }
+        },
+        {
+          "points": 700,
+          "clue": "",
+          "answer": "Martin Scorsese",
+          "media": {
+            "type": "external",
+            "label": "Video clue",
+            "hostNote": "https://www.youtube.com/watch?v=I90ZluYvHic"
+          }
+        }
+      ]
+    },
+    {
+      "name": "UCLA",
+      "cells": [
+        { "points": 100, "clue": "", "answer": "Boelter", "media": { "type": "external", "label": "Slideshow" } },
+        { "points": 200, "clue": "", "answer": "Dykstra", "media": { "type": "external", "label": "Slideshow" } },
+        { "points": 300, "clue": "", "answer": "Kaufman", "media": { "type": "external", "label": "Slideshow" } },
+        { "points": 400, "clue": "", "answer": "Schoenberg", "media": { "type": "external", "label": "Slideshow" } },
+        { "points": 500, "clue": "", "answer": "Kerckhoff", "media": { "type": "external", "label": "Slideshow" } },
+        { "points": 600, "clue": "", "answer": "Spieker", "media": { "type": "external", "label": "Slideshow" } }
       ]
     }
   ]

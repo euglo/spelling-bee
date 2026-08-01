@@ -1,43 +1,35 @@
 {
   "categories": [
     {
-      "name": "California",
-      "cells": [
-        { "points": 100, "word": "Walnut", "hint": "A nut often associated with California orchards" },
-        { "points": 200, "word": "Temecula", "hint": "A Riverside County city known for wineries" },
-        { "points": 300, "word": "Monterey", "hint": "A coastal city famous for its bay and aquarium" },
-        { "points": 400, "word": "Mount Tamalpais", "hint": "A mountain near San Francisco with a famous name" },
-        { "points": 500, "word": "San Bernardino", "hint": "An inland city in Southern California" }
-      ]
-    },
-    {
-      "name": "Cultural Cuisine",
-      "cells": [
-        { "points": 100, "word": "Gelato", "hint": "An Italian frozen dessert" },
-        { "points": 200, "word": "Gnocchi", "hint": "Small Italian potato dumplings" },
-        { "points": 300, "word": "Tzatziki", "hint": "A cool cucumber-yogurt sauce" },
-        { "points": 400, "word": "Worcestershire", "hint": "A tangy sauce used in dressings and marinades" },
-        { "points": 500, "word": "Gochujang", "hint": "A Korean chili paste with a deep umami kick" }
-      ]
-    },
-    {
       "name": "Alcohols",
       "cells": [
-        { "points": 100, "word": "Aperol", "hint": "A bright orange Italian aperitivo" },
-        { "points": 200, "word": "Tequila", "hint": "A distilled spirit from Mexico" },
-        { "points": 300, "word": "Curacao", "hint": "An orange-flavored liqueur with a Caribbean name" },
-        { "points": 400, "word": "Vermouth", "hint": "A fortified wine often used in cocktails" },
-        { "points": 500, "word": "Maraschino", "hint": "A cherry liqueur with a very fancy name" }
+        { "points": 50, "word": "Bordeaux", "hint": "A French wine region and its wines" },
+        { "points": 100, "word": "Curacao", "hint": "An orange-flavored liqueur named after a Caribbean island" },
+        { "points": 150, "word": "Sauvignon Blanc", "hint": "A crisp, aromatic white wine grape" },
+        { "points": 200, "word": "Absinthe", "hint": "A high-proof anise-flavored spirit once banned in many countries" },
+        { "points": 250, "word": "Daiquiri", "hint": "A rum cocktail with lime and sugar" },
+        { "points": 300, "word": "Maraschino", "hint": "A cherry liqueur with a very fancy name" }
       ]
     },
     {
-      "name": "New York",
+      "name": "Cuisine",
       "cells": [
-        { "points": 100, "word": "Houston Street", "hint": "A famous Manhattan street in lower Manhattan" },
-        { "points": 200, "word": "Hoboken", "hint": "A New Jersey city across the Hudson from Manhattan" },
-        { "points": 300, "word": "LaGuardia", "hint": "A major New York City airport" },
-        { "points": 400, "word": "Chrysler Building", "hint": "A landmark Art Deco skyscraper in Midtown" },
-        { "points": 500, "word": "Weehawken", "hint": "A New Jersey waterfront town tied to a famous duel" }
+        { "points": 50, "word": "Bolognese", "hint": "An Italian meat-based pasta sauce" },
+        { "points": 100, "word": "Charcuterie", "hint": "A French board of cured meats and cheeses" },
+        { "points": 150, "word": "Stracciatella", "hint": "An Italian soup or gelato style with a shredded texture" },
+        { "points": 200, "word": "Gochujang", "hint": "A Korean chili paste with a deep umami kick" },
+        { "points": 250, "word": "Tzatziki", "hint": "A cool cucumber-yogurt sauce" },
+        { "points": 300, "word": "Worcestershire", "hint": "A tangy sauce used in dressings and marinades" }
+      ]
+    },
+    {
+      "name": "Grab Bag",
+      "cells": [
+        { "points": 50, "word": "Massachusetts", "hint": "A New England state and home to Boston" },
+        { "points": 100, "word": "Deciduous", "hint": "Describes trees that shed their leaves each year" },
+        { "points": 150, "word": "Balayage", "hint": "A hair-coloring technique with a French name" },
+        { "points": 200, "word": "Onomatopoeia", "hint": "A word that imitates the sound it describes" },
+        { "points": 250, "word": "Schadenfreude", "hint": "Pleasure derived from someone else's misfortune" }
       ]
     }
   ]
