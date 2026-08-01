@@ -160,7 +160,7 @@ export function JeopardyBoard<TCell extends CellLike>({
   )
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-[1800px] mx-auto">
       {state.teams.length === 0 && (
         <p className="text-center font-body text-lg text-ink/50 mb-3">
           No teams yet — add teams on the Setup tab before playing.
@@ -180,7 +180,7 @@ export function JeopardyBoard<TCell extends CellLike>({
         {categories.map((cat) => (
           <div
             key={cat.name}
-            className={`font-display ${HEADER_ACCENT[accent]} text-center py-1.5 text-lg sm:text-xl tracking-widest uppercase flex items-center justify-center border-b-2 border-ink/15`}
+            className={`font-display ${HEADER_ACCENT[accent]} text-center py-1.5 text-xl sm:text-2xl tracking-wide uppercase flex items-center justify-center border-b-2 border-ink/15`}
           >
             {cat.name}
           </div>

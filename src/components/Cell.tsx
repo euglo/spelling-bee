@@ -79,9 +79,9 @@ export function Cell({
           </span>
         </>
       ) : status === 'resolved' ? (
-        <span className="text-xl sm:text-2xl">✓</span>
+        <span className="text-2xl sm:text-3xl">✓</span>
       ) : unplayed ? (
-        <span className="text-xl sm:text-3xl tracking-wide">${points}</span>
+        <span className="text-2xl sm:text-4xl tracking-wide">${points}</span>
       ) : null}
     </motion.button>
   )
