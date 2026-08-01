@@ -71,13 +71,18 @@ export function JeopardyBoard<TCell extends CellLike>({
 
   const boardMax = Math.max(0, ...categories.flatMap((c) => c.cells.map((cell) => cell.points)))
 
+  const activeEntry = Object.entries(roundState.cells).find(([, v]) => v.status === 'in-play')
+  const activeKey = activeEntry?.[0] ?? null
+
   const wrapperRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
-  // Layout above (picker line) and below (resolved-so-far toggle) the grid
-  // appears/disappears as the game progresses — refit whenever that changes.
-  const hasPicker = Boolean(roundState.currentPickerTeamId)
+  // The picker line and the resolved-so-far toggle are both suppressed while
+  // any modal is open (`!activeKey && !revealing`) and only actually take up
+  // space once idle — refit whenever that visibility flips, not just when
+  // the underlying picker/resolved state changes.
   const hasResolved = Object.values(roundState.cells).some((c) => c.status === 'resolved')
+  const idle = !activeKey && !revealing
 
   const NATURAL_MAX_WIDTH = 1800
 
@@ -103,7 +108,7 @@ export function JeopardyBoard<TCell extends CellLike>({
       const rowsPortion = rect.height - headerHeight
       if (rowsPortion <= 0) return
 
-      const SAFETY = 8
+      const SAFETY = 24
       const bottomChrome = Math.max(0, document.documentElement.scrollHeight - (rect.top + rect.height))
       const available = window.innerHeight - rect.top - bottomChrome - SAFETY
       const targetRowsPortion = available - headerHeight
@@ -113,14 +118,10 @@ export function JeopardyBoard<TCell extends CellLike>({
       wrapper.style.maxWidth = `${Math.max(rect.width * ratio, 480)}px`
     }
 
-    console.log('[fit-effect] running', { hasPicker, hasResolved })
     fit()
     window.addEventListener('resize', fit)
     return () => window.removeEventListener('resize', fit)
-  }, [categories, maxRows, hasPicker, hasResolved])
-
-  const activeEntry = Object.entries(roundState.cells).find(([, v]) => v.status === 'in-play')
-  const activeKey = activeEntry?.[0] ?? null
+  }, [categories, maxRows, idle, hasResolved])
 
   let activeCell: TCell | null = null
   let activeCatIdx = -1
