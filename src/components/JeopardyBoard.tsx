@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useGameState } from '../state/GameStateContext'
 import type { BoardCategory } from '../types/board'
@@ -70,6 +70,44 @@ export function JeopardyBoard<TCell extends CellLike>({
   const [dailyTeamId, setDailyTeamId] = useState<string | null>(null)
 
   const boardMax = Math.max(0, ...categories.flatMap((c) => c.cells.map((cell) => cell.points)))
+
+  const gridRef = useRef<HTMLDivElement>(null)
+  const [boardWidth, setBoardWidth] = useState<number | null>(null)
+
+  // Cells keep a fixed aspect ratio, so a grid's height scales linearly with
+  // its width. Boards with few rows (round 1) fit fine at a wide cap; boards
+  // with many rows (round 2) don't. Measure once at natural width and, if
+  // that overflows the viewport, shrink to the exact width that doesn't —
+  // rather than picking one fixed max-width that's wrong for one round or
+  // the other.
+  useLayoutEffect(() => {
+    const grid = gridRef.current
+    if (!grid) return
+
+    function fit() {
+      if (!grid) return
+      const headerCells = Array.from(grid.children).slice(0, categories.length) as HTMLElement[]
+      const headerHeight = Math.max(0, ...headerCells.map((el) => el.getBoundingClientRect().height))
+      const rect = grid.getBoundingClientRect()
+      const rowsPortion = rect.height - headerHeight
+      if (rowsPortion <= 0) return
+
+      // room for the "<team> picks the next board" line, which isn't always
+      // present, plus a little breathing space at the bottom of the screen
+      const BOTTOM_BUFFER = 64
+      const available = window.innerHeight - rect.top - BOTTOM_BUFFER
+      const targetRowsPortion = available - headerHeight
+      if (targetRowsPortion >= rowsPortion) return // already fits at natural width
+
+      const ratio = Math.max(targetRowsPortion, 0) / rowsPortion
+      setBoardWidth(Math.max(rect.width * ratio, 480))
+    }
+
+    fit()
+    window.addEventListener('resize', fit)
+    return () => window.removeEventListener('resize', fit)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const activeEntry = Object.entries(roundState.cells).find(([, v]) => v.status === 'in-play')
   const activeKey = activeEntry?.[0] ?? null
@@ -160,7 +198,7 @@ export function JeopardyBoard<TCell extends CellLike>({
   )
 
   return (
-    <div className="max-w-[1800px] mx-auto">
+    <div className="mx-auto" style={{ maxWidth: boardWidth != null ? `${boardWidth}px` : '1800px' }}>
       {state.teams.length === 0 && (
         <p className="text-center font-body text-lg text-ink/50 mb-3">
           No teams yet — add teams on the Setup tab before playing.
@@ -174,6 +212,7 @@ export function JeopardyBoard<TCell extends CellLike>({
       )}
 
       <div
+        ref={gridRef}
         className="grid gap-2"
         style={{ gridTemplateColumns: `repeat(${categories.length}, minmax(0,1fr))` }}
       >
