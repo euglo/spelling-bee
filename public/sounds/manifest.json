@@ -1,5 +1,6 @@
 {
-  "correct": ["anime-wow.mp3", "apple-pay.mp3", "nelly-ahh.mp3", "pluh.mp3", "yippee.mp3"],
+  "correct": ["anime-wow.mp3", "apple-pay.mp3", "gta-mission-complete.mp3", "nelly-ahh.mp3", "pluh.mp3", "yippee.mp3"],
   "incorrect": ["bark-fart.mp3", "bruh.mp3", "fahh.mp3", "roblox-death-sound.mp3", "vine-boom.mp3"],
-  "open": ["asian-gong.mp3", "sparkle.mp3"]
+  "open": ["asian-gong.mp3", "sparkle.mp3"],
+  "double": ["oriental-riff.mp3"]
 }

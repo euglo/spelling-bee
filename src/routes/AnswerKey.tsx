@@ -34,30 +34,43 @@ export function AnswerKey({ round }: AnswerKeyProps) {
           </h2>
           <table className="w-full text-sm border-collapse">
             <tbody>
-              {cat.cells.map((cell, i) => (
-                <tr key={i} className="border-b border-dashed border-paper-line">
-                  <td className="py-1.5 pr-3 font-semibold w-16 align-top">${cell.points}</td>
-                  {round === 'round1' ? (
-                    <>
-                      <td className="py-1.5 pr-3 font-semibold w-40 align-top">
-                        {(cell as Round1Cell).word}
-                      </td>
-                      <td className="py-1.5 text-ink-deep/70 align-top">
-                        {(cell as Round1Cell).hint}
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td className="py-1.5 pr-3 text-ink-deep/80 align-top">
-                        {(cell as Round2Cell).clue}
-                      </td>
-                      <td className="py-1.5 font-semibold w-40 align-top">
-                        {(cell as Round2Cell).answer}
-                      </td>
-                    </>
-                  )}
-                </tr>
-              ))}
+              {cat.cells.map((cell, i) => {
+                const r1 = cell as Round1Cell
+                const r2 = cell as Round2Cell
+                return (
+                  <tr key={i} className="border-b border-dashed border-paper-line">
+                    <td className="py-1.5 pr-3 font-semibold w-16 align-top">
+                      ${cell.points}
+                      {r2.daily && (
+                        <span className="block text-[10px] font-bold text-buzz tracking-wide">
+                          DAILY 2×
+                        </span>
+                      )}
+                    </td>
+                    {round === 'round1' ? (
+                      <>
+                        <td className="py-1.5 pr-3 font-semibold w-40 align-top">{r1.word}</td>
+                        <td className="py-1.5 text-ink-deep/70 align-top">{r1.hint}</td>
+                      </>
+                    ) : (
+                      <>
+                        <td className="py-1.5 pr-3 text-ink-deep/80 align-top">
+                          {r2.media?.type === 'image' && (
+                            <span className="font-bold text-ink-deep">[IMAGE] </span>
+                          )}
+                          {r2.media?.type === 'external' && (
+                            <span className="font-bold text-buzz">
+                              [OTHER SCREEN{r2.media.label ? `: ${r2.media.label}` : ''}]{' '}
+                            </span>
+                          )}
+                          {r2.clue}
+                        </td>
+                        <td className="py-1.5 font-semibold w-40 align-top">{r2.answer}</td>
+                      </>
+                    )}
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>

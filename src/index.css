@@ -21,6 +21,10 @@
 
   /* status */
   --color-buzz: #c81e3a;
+
+  /* Daily Double — Chinese red and gold */
+  --color-lucky-red: #de2910;
+  --color-lucky-gold: #ffd700;
 }
 
 body {

@@ -5,17 +5,21 @@ import type { BoardCategory } from '../types/board'
 import type { RoundId } from '../types/game'
 import { cellKey } from '../types/game'
 import { Cell } from './Cell'
-import { ResolvePanel } from './ResolvePanel'
+import { ResolvePanel, type ResolutionResult } from './ResolvePanel'
 import { ParticleBurst } from './ParticleBurst'
 import { EmojiShower } from './EmojiShower'
 import { VortexPullIn } from './VortexPullIn'
 import { BeeSwarm } from './BeeSwarm'
+import { DailyDoubleSplash, DailyDoubleWager } from './DailyDouble'
 import { pickTileAnimation } from '../lib/tileAnimations'
 import { pickParticleEffect } from '../lib/particleEffects'
-import { playOpenSound } from '../hooks/useSound'
+import { playOpenSound, playDoubleSound } from '../hooks/useSound'
+import { findOutcome, signedAward, describeResolution } from '../lib/scoring'
+import type { ScoreDelta } from '../types/game'
 
 interface CellLike {
   points: number
+  daily?: boolean
 }
 
 interface JeopardyBoardProps<TCell extends CellLike> {
@@ -35,7 +39,18 @@ const HEADER_ACCENT: Record<'honey' | 'violet', string> = {
 interface RevealState<TCell> {
   key: string
   cell: TCell
-  teamId: string | null
+  resolution: ResolutionResult
+  /** wager on a Daily Double, otherwise the cell's face value */
+  points: number
+}
+
+/** splash → wager, then the clue renders as normal */
+type DailyStep = 'splash' | 'wager'
+
+const toneClass: Record<'good' | 'partial' | 'bad', string> = {
+  good: 'text-ink',
+  partial: 'text-honey',
+  bad: 'text-buzz',
 }
 
 export function JeopardyBoard<TCell extends CellLike>({
@@ -50,6 +65,11 @@ export function JeopardyBoard<TCell extends CellLike>({
   const roundState = state[round]
   const maxRows = Math.max(0, ...categories.map((c) => c.cells.length))
   const [revealing, setRevealing] = useState<RevealState<TCell> | null>(null)
+  const [dailyStep, setDailyStep] = useState<DailyStep | null>(null)
+  const [wager, setWager] = useState<number | null>(null)
+  const [dailyTeamId, setDailyTeamId] = useState<string | null>(null)
+
+  const boardMax = Math.max(0, ...categories.flatMap((c) => c.cells.map((cell) => cell.points)))
 
   const activeEntry = Object.entries(roundState.cells).find(([, v]) => v.status === 'in-play')
   const activeKey = activeEntry?.[0] ?? null
@@ -68,36 +88,87 @@ export function JeopardyBoard<TCell extends CellLike>({
   const cardAnimation = useMemo(() => (modalKey ? pickTileAnimation() : null), [modalKey])
   const particleEffect = useMemo(() => (modalKey ? pickParticleEffect() : null), [modalKey])
 
+  const isDaily = Boolean(activeCell?.daily)
+  // On a Daily Double the locked-in wager stands in for the cell's face value.
+  const effectivePoints = isDaily ? (wager ?? 0) : (activeCell?.points ?? 0)
+
+  const resetDaily = () => {
+    setDailyStep(null)
+    setWager(null)
+    setDailyTeamId(null)
+  }
+
   const closeModal = () => {
     if (revealing) {
       setRevealing(null)
     } else if (activeCatIdx >= 0) {
       cancelCell(round, activeCatIdx, activeRowIdx)
+      resetDaily()
     }
   }
 
-  const handleResolve = (teamId: string | null) => {
+  const handleResolve = (result: ResolutionResult) => {
     if (!activeCell || !activeKey) return
-    resolveCell(round, activeCatIdx, activeRowIdx, activeCell.points, teamId)
-    setRevealing({ key: activeKey, cell: activeCell, teamId })
+    const attemptOutcome = findOutcome(
+      round,
+      isDaily ? 'daily' : 'attempt',
+      result.attemptOutcomeId,
+    )
+    if (!attemptOutcome) return
+
+    // Both the picker and a stealer can move on one cell, so collect signed
+    // deltas rather than a single award. Only a positive net wins the board.
+    const deltas: ScoreDelta[] = []
+    let winningTeamId: string | null = null
+
+    const attemptDelta = signedAward(effectivePoints, attemptOutcome)
+    if (attemptDelta !== 0) {
+      deltas.push({ teamId: result.attemptedBy, points: attemptDelta })
+      if (attemptDelta > 0) winningTeamId = result.attemptedBy
+    }
+
+    if (result.stealOutcomeId && result.stealBy) {
+      const stealOutcome = findOutcome(round, 'steal', result.stealOutcomeId)
+      if (stealOutcome) {
+        const stealDelta = signedAward(effectivePoints, stealOutcome)
+        if (stealDelta !== 0) {
+          deltas.push({ teamId: result.stealBy, points: stealDelta })
+          if (stealDelta > 0) winningTeamId = result.stealBy
+        }
+      }
+    }
+
+    resolveCell(round, activeCatIdx, activeRowIdx, {
+      deltas,
+      winningTeamId,
+      attemptedBy: result.attemptedBy,
+      attemptOutcomeId: result.attemptOutcomeId,
+      stealBy: result.stealBy,
+      stealOutcomeId: result.stealOutcomeId,
+      daily: isDaily,
+      wager: isDaily ? effectivePoints : undefined,
+    })
+    setRevealing({ key: activeKey, cell: activeCell, resolution: result, points: effectivePoints })
+    resetDaily()
   }
+
+  const teamName = (id: string | null | undefined) => state.teams.find((t) => t.id === id)?.name ?? 'They'
 
   const pickerTeam = state.teams.find((t) => t.id === roundState.currentPickerTeamId)
   const resolvedEntries = Object.entries(roundState.cells).filter(
     ([, v]) => v.status === 'resolved',
   )
-  const winner = revealing ? state.teams.find((t) => t.id === revealing.teamId) : undefined
 
   return (
     <div className="max-w-5xl mx-auto">
       {state.teams.length === 0 && (
-        <p className="text-center font-body text-ink/50 mb-3">
+        <p className="text-center font-body text-lg text-ink/50 mb-3">
           No teams yet — add teams on the Setup tab before playing.
         </p>
       )}
 
       {pickerTeam && !activeKey && !revealing && (
-        <p className="text-center font-body text-ink/70 mb-3">
+        <p className="text-center font-body text-lg text-ink/70 mb-3">
           <span className="text-ink font-bold">{pickerTeam.name}</span> picks the next board.
         </p>
       )}
@@ -109,7 +180,7 @@ export function JeopardyBoard<TCell extends CellLike>({
         {categories.map((cat) => (
           <div
             key={cat.name}
-            className={`font-display ${HEADER_ACCENT[accent]} text-center py-1.5 text-base sm:text-lg tracking-widest uppercase flex items-center justify-center border-b-2 border-ink/15`}
+            className={`font-display ${HEADER_ACCENT[accent]} text-center py-1.5 text-lg sm:text-xl tracking-widest uppercase flex items-center justify-center border-b-2 border-ink/15`}
           >
             {cat.name}
           </div>
@@ -133,13 +204,24 @@ export function JeopardyBoard<TCell extends CellLike>({
                 onUndo={() => undoLastResolved(round)}
                 onClick={() => {
                   selectCell(round, catIdx, rowIdx)
-                  playOpenSound()
+                  if (cell.daily) {
+                    setDailyStep('splash')
+                    playDoubleSound()
+                  } else {
+                    playOpenSound()
+                  }
                 }}
               />
             )
           }),
         )}
       </div>
+
+      <AnimatePresence>
+        {activeCell && isDaily && dailyStep === 'splash' && (
+          <DailyDoubleSplash key="daily-splash" onContinue={() => setDailyStep('wager')} />
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {(activeCell || revealing) && cardAnimation && (
@@ -151,8 +233,11 @@ export function JeopardyBoard<TCell extends CellLike>({
             transition={{ duration: 0.15 }}
             onClick={closeModal}
           >
+            {/* Daily Doubles get the dragon shower instead of a random effect —
+                the two firing together looked like a bug. */}
             {activeCell &&
               !revealing &&
+              !isDaily &&
               particleEffect &&
               (particleEffect.kind === 'radial' ? (
                 <ParticleBurst key={`particles-${modalKey}`} colors={particleEffect.colors} />
@@ -200,11 +285,15 @@ export function JeopardyBoard<TCell extends CellLike>({
                   <p className="font-display text-4xl sm:text-5xl text-ink mb-4 px-4">
                     {renderReveal(revealing.cell)}
                   </p>
-                  <p
-                    className={`font-body font-bold text-lg mb-6 ${winner ? 'text-ink' : 'text-buzz'}`}
-                  >
-                    {winner ? `${winner.name} got it! +${revealing.cell.points} pts` : 'Nobody got it'}
-                  </p>
+                  <div className="mb-6">
+                    {describeResolution(round, revealing.resolution, revealing.points, teamName).map(
+                      (line, i) => (
+                        <p key={i} className={`font-body font-bold text-2xl ${toneClass[line.tone]}`}>
+                          {line.text}
+                        </p>
+                      ),
+                    )}
+                  </div>
                   <motion.button
                     type="button"
                     whileHover={{ scale: 1.05 }}
@@ -215,12 +304,33 @@ export function JeopardyBoard<TCell extends CellLike>({
                     Continue
                   </motion.button>
                 </motion.div>
+              ) : activeCell && isDaily && dailyStep ? (
+                // Clue stays hidden until the wager is locked in, as in real Jeopardy.
+                dailyStep === 'wager' ? (
+                  <DailyDoubleWager
+                    boardMax={boardMax}
+                    cellPoints={activeCell.points}
+                    pickerTeamId={roundState.currentPickerTeamId}
+                    onLockIn={(teamId, amount) => {
+                      setDailyTeamId(teamId)
+                      setWager(amount)
+                      setDailyStep(null)
+                    }}
+                  />
+                ) : null
               ) : activeCell ? (
                 <>
-                  <p className="font-body text-2xl sm:text-3xl font-semibold text-ink mb-2 px-4">
+                  {/* div, not p — renderPrompt may return block content (figure/img) */}
+                  <div className="font-body text-2xl sm:text-3xl font-semibold text-ink mb-2 px-4">
                     {renderPrompt(activeCell)}
-                  </p>
-                  <ResolvePanel points={activeCell.points} onResolve={handleResolve} />
+                  </div>
+                  <ResolvePanel
+                    round={round}
+                    points={effectivePoints}
+                    daily={isDaily}
+                    pickerTeamId={isDaily ? dailyTeamId : roundState.currentPickerTeamId}
+                    onResolve={handleResolve}
+                  />
                 </>
               ) : null}
             </motion.div>
@@ -236,11 +346,19 @@ export function JeopardyBoard<TCell extends CellLike>({
               const [c, r] = key.split('-').map(Number)
               const cell = categories[c]?.cells[r]
               if (!cell) return null
-              const entryWinner = state.teams.find((t) => t.id === v.wonBy)
+              const face = v.wager ?? cell.points
               return (
                 <li key={key}>
-                  {categories[c].name} — ${cell.points}: {renderReveal(cell)} (
-                  {entryWinner ? entryWinner.name : 'unanswered'})
+                  {categories[c].name} — ${face}
+                  {v.wager != null && ' (DD)'}: {renderReveal(cell)}{' '}
+                  {(v.deltas ?? []).length === 0
+                    ? '(no change)'
+                    : (v.deltas ?? [])
+                        .map((d) => {
+                          const name = state.teams.find((t) => t.id === d.teamId)?.name ?? '?'
+                          return `${name} ${d.points > 0 ? '+' : '−'}${Math.abs(d.points)}`
+                        })
+                        .join(', ')}
                 </li>
               )
             })}

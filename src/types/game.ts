@@ -6,12 +6,29 @@ export interface Team {
 
 export type CellStatus = 'unplayed' | 'in-play' | 'resolved'
 
+/** A signed score change applied to one team. Round 2 can move two teams on a
+ *  single cell — the picker loses the clue value and a stealer gains it. */
+export interface ScoreDelta {
+  teamId: string
+  points: number
+}
+
 export interface CellResolution {
   status: CellStatus
-  /** teamId that won the points, or null if nobody answered correctly */
+  /** every score change this cell caused, so undo can reverse all of them */
+  deltas?: ScoreDelta[]
+  /** team that netted positive — display only (reveal text, resolved log) */
   wonBy?: string | null
-  /** points banked for this cell, needed to reverse an undo */
-  points?: number
+  /** teamId that made the first attempt (the picker) */
+  attemptedBy?: string | null
+  /** outcome id from lib/scoring.ts describing how the attempt went */
+  attemptOutcomeId?: string
+  /** teamId that attempted a steal, if the first attempt missed */
+  stealBy?: string | null
+  /** outcome id from lib/scoring.ts describing how the steal went */
+  stealOutcomeId?: string
+  /** locked-in wager, Daily Double only — replaces the cell's face value */
+  wager?: number
   /** turn state snapshotted right before this resolution, so undo can restore it */
   prevPickerTeamId?: string | null
   prevRotationIndex?: number

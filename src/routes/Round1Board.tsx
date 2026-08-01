@@ -11,8 +11,8 @@ export function Round1Board() {
   return (
     <div>
       <div className="text-center mb-3">
-        <p className="font-display text-honey tracking-[0.3em] text-xs mb-0.5">🐝 ROUND ONE</p>
-        <h1 className="font-display text-2xl sm:text-3xl text-ink tracking-wide">
+        <p className="font-display text-honey tracking-[0.3em] text-sm mb-0.5">🐝 ROUND ONE</p>
+        <h1 className="font-display text-3xl sm:text-4xl text-ink tracking-wide">
           Spell the Word
         </h1>
       </div>

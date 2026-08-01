@@ -73,15 +73,15 @@ export function Cell({
     >
       {undoable ? (
         <>
-          <span className="text-sm sm:text-base leading-none">↺</span>
-          <span className="font-body text-[9px] sm:text-[10px] uppercase tracking-wide">
+          <span className="text-base sm:text-lg leading-none">↺</span>
+          <span className="font-body text-[10px] sm:text-xs uppercase tracking-wide">
             Undo
           </span>
         </>
       ) : status === 'resolved' ? (
-        <span className="text-lg sm:text-xl">✓</span>
+        <span className="text-xl sm:text-2xl">✓</span>
       ) : unplayed ? (
-        <span className="text-lg sm:text-2xl tracking-wide">${points}</span>
+        <span className="text-xl sm:text-3xl tracking-wide">${points}</span>
       ) : null}
     </motion.button>
   )

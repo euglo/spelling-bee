@@ -24,7 +24,7 @@ function beep(freq: number, duration: number) {
   osc.onended = () => ctx.close()
 }
 
-type SoundCategory = 'correct' | 'incorrect' | 'open'
+type SoundCategory = 'correct' | 'incorrect' | 'open' | 'double'
 
 type SoundManifest = Record<SoundCategory, string[]>
 
@@ -69,6 +69,10 @@ export function playIncorrectSound() {
 
 export function playOpenSound() {
   playCustomOrFallback('open', () => beep(500, 0.15))
+}
+
+export function playDoubleSound() {
+  playCustomOrFallback('double', () => beep(660, 0.5))
 }
 
 export function useSoundEnabled() {

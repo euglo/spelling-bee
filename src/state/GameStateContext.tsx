@@ -1,8 +1,11 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import type { GameState, RoundId, RoundState } from '../types/game'
+import type { GameState, RoundId, RoundState, ScoreDelta } from '../types/game'
 import { cellKey } from '../types/game'
 
-const STORAGE_KEY = 'spelling-bee-game-state-v1'
+// v2: resolutions record a list of signed score deltas instead of a single
+// wonBy/points pair, since Round 2 can move two teams on one cell. There is no
+// migration — bumping the key drops stale v1 games rather than crashing on them.
+const STORAGE_KEY = 'spelling-bee-game-state-v2'
 
 function emptyRoundState(): RoundState {
   return { cells: {}, currentPickerTeamId: null, rotationIndex: 0, lastResolvedKey: null }
@@ -25,15 +28,23 @@ interface GameStateContextValue {
   renameTeam: (id: string, name: string) => void
   selectCell: (round: RoundId, categoryIndex: number, cellIndex: number) => void
   cancelCell: (round: RoundId, categoryIndex: number, cellIndex: number) => void
-  resolveCell: (
-    round: RoundId,
-    categoryIndex: number,
-    cellIndex: number,
-    points: number,
-    winningTeamId: string | null,
-  ) => void
+  resolveCell: (round: RoundId, categoryIndex: number, cellIndex: number, resolution: ResolveInput) => void
   undoLastResolved: (round: RoundId) => void
   resetGame: () => void
+}
+
+interface ResolveInput {
+  /** every score change this cell caused; may touch two teams */
+  deltas: ScoreDelta[]
+  /** team that netted positive, for display and for who picks next */
+  winningTeamId: string | null
+  attemptedBy: string | null
+  attemptOutcomeId: string
+  stealBy?: string | null
+  stealOutcomeId?: string
+  /** Daily Double: the selector keeps board control regardless of outcome */
+  daily?: boolean
+  wager?: number
 }
 
 const GameStateContext = createContext<GameStateContextValue | null>(null)
@@ -90,26 +101,27 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
     })
   }
 
-  const resolveCell = (
-    round: RoundId,
-    categoryIndex: number,
-    cellIndex: number,
-    points: number,
-    winningTeamId: string | null,
-  ) => {
+  const resolveCell = (round: RoundId, categoryIndex: number, cellIndex: number, resolution: ResolveInput) => {
+    const { deltas, winningTeamId, attemptedBy, attemptOutcomeId, stealBy, stealOutcomeId, daily, wager } =
+      resolution
     setState((prev) => {
       const key = cellKey(categoryIndex, cellIndex)
       const roundState = prev[round]
-      const teams = winningTeamId
-        ? prev.teams.map((t) => (t.id === winningTeamId ? { ...t, score: t.score + points } : t))
-        : prev.teams
+      const teams = prev.teams.map((t) => {
+        const delta = deltas.find((d) => d.teamId === t.id)
+        return delta ? { ...t, score: t.score + delta.points } : t
+      })
 
-      const nextRotationIndex = winningTeamId
+      // Whoever netted positive earns the board. On a Daily Double the selector
+      // keeps control either way (real Jeopardy). Otherwise the turn rotates.
+      const keepsControl = winningTeamId ?? (daily ? attemptedBy : null)
+
+      const nextRotationIndex = keepsControl
         ? roundState.rotationIndex
         : (roundState.rotationIndex + 1) % Math.max(prev.teams.length, 1)
 
-      const nextPicker = winningTeamId
-        ? winningTeamId
+      const nextPicker = keepsControl
+        ? keepsControl
         : prev.teams.length > 0
           ? prev.teams[nextRotationIndex].id
           : null
@@ -124,7 +136,12 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
             [key]: {
               status: 'resolved',
               wonBy: winningTeamId,
-              points,
+              deltas,
+              attemptedBy,
+              attemptOutcomeId,
+              stealBy,
+              stealOutcomeId,
+              wager,
               prevPickerTeamId: roundState.currentPickerTeamId,
               prevRotationIndex: roundState.rotationIndex,
             },
@@ -146,12 +163,11 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
       if (!resolution || resolution.status !== 'resolved') return prev
 
       const { [key]: _removed, ...restCells } = roundState.cells
-      const teams =
-        resolution.wonBy && resolution.points
-          ? prev.teams.map((t) =>
-              t.id === resolution.wonBy ? { ...t, score: t.score - resolution.points! } : t,
-            )
-          : prev.teams
+      const deltas = resolution.deltas ?? []
+      const teams = prev.teams.map((t) => {
+        const delta = deltas.find((d) => d.teamId === t.id)
+        return delta ? { ...t, score: t.score - delta.points } : t
+      })
 
       return {
         ...prev,

@@ -22,7 +22,13 @@ export function Scoreboard() {
           }`}
         >
           <span>{team.name}</span>
-          <span className="font-mono tabular-nums">{team.score}</span>
+          <span
+            className={`font-mono tabular-nums ${
+              team.score < 0 ? (i === 0 ? 'text-buzz' : 'text-buzz/90') : ''
+            }`}
+          >
+            {team.score}
+          </span>
         </div>
       ))}
     </div>
