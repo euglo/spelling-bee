@@ -102,20 +102,26 @@ export function JeopardyBoard<TCell extends CellLike>({
       if (!wrapper || !grid) return
       wrapper.style.maxWidth = `${NATURAL_MAX_WIDTH}px`
 
-      const headerCells = Array.from(grid.children).slice(0, categories.length) as HTMLElement[]
-      const headerHeight = Math.max(0, ...headerCells.map((el) => el.getBoundingClientRect().height))
-      const rect = grid.getBoundingClientRect()
-      const rowsPortion = rect.height - headerHeight
-      if (rowsPortion <= 0) return
+      const SAFETY = 16
+      // Shrinking the grid can wrap category names onto more lines, growing
+      // headerHeight — a single width/height ratio correction would assume
+      // it stays fixed and under-shrink. Iterate until it settles (or give
+      // up after a few passes, which only happens if it can never fit).
+      for (let pass = 0; pass < 4; pass++) {
+        const headerCells = Array.from(grid.children).slice(0, categories.length) as HTMLElement[]
+        const headerHeight = Math.max(0, ...headerCells.map((el) => el.getBoundingClientRect().height))
+        const rect = grid.getBoundingClientRect()
+        const rowsPortion = rect.height - headerHeight
+        if (rowsPortion <= 0) return
 
-      const SAFETY = 24
-      const bottomChrome = Math.max(0, document.documentElement.scrollHeight - (rect.top + rect.height))
-      const available = window.innerHeight - rect.top - bottomChrome - SAFETY
-      const targetRowsPortion = available - headerHeight
-      if (targetRowsPortion >= rowsPortion) return // natural width already fits
+        const bottomChrome = Math.max(0, document.documentElement.scrollHeight - (rect.top + rect.height))
+        const available = window.innerHeight - rect.top - bottomChrome - SAFETY
+        const targetRowsPortion = available - headerHeight
+        if (targetRowsPortion >= rowsPortion) return // fits at the current width
 
-      const ratio = Math.max(targetRowsPortion, 0) / rowsPortion
-      wrapper.style.maxWidth = `${Math.max(rect.width * ratio, 480)}px`
+        const ratio = Math.max(targetRowsPortion, 0) / rowsPortion
+        wrapper.style.maxWidth = `${Math.max(rect.width * ratio, 480)}px`
+      }
     }
 
     fit()
