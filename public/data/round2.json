@@ -17,49 +17,49 @@
       "cells": [
         {
           "points": 100,
-          "clue": "Spell the name of this coastal city famous for its bay and aquarium.",
+          "clue": "",
           "answer": "Monterey",
           "media": { "type": "image", "src": "/images/round2/monterey.jpg" }
         },
         {
           "points": 200,
-          "clue": "Spell the name of this inland Southern California city.",
+          "clue": "",
           "answer": "San Bernardino",
           "media": { "type": "image", "src": "/images/round2/san-bernardino.png" }
         },
         {
           "points": 300,
-          "clue": "Spell the name of this Central Coast city.",
+          "clue": "",
           "answer": "San Luis Obispo",
           "media": { "type": "image", "src": "/images/round2/san-luis-obispo.png" }
         },
         {
           "points": 400,
-          "clue": "Spell the name of this Inland Empire city.",
+          "clue": "",
           "answer": "Rancho Cucamonga",
           "media": { "type": "image", "src": "/images/round2/rancho-cucamonga.png" }
         },
         {
           "points": 500,
-          "clue": "Spell the name of this famous Los Angeles road.",
+          "clue": "",
           "answer": "Mulholland Drive",
           "media": { "type": "image", "src": "/images/round2/mulholland.jpeg" }
         },
         {
           "points": 600,
-          "clue": "Spell the name of this San Francisco chocolate landmark.",
+          "clue": "",
           "answer": "Ghirardelli Square",
           "media": { "type": "image", "src": "/images/round2/ghirardelli-square.png" }
         },
         {
           "points": 700,
-          "clue": "Spell the name of this mountain near San Francisco.",
+          "clue": "",
           "answer": "Mount Tamalpais",
           "media": { "type": "image", "src": "/images/round2/mount-tamalpais.png" }
         },
         {
           "points": 800,
-          "clue": "Spell the name of this Sierra Nevada county and river, home to Yosemite National Park.",
+          "clue": "",
           "answer": "Tuolumne",
           "media": { "type": "image", "src": "/images/round2/tuolumne.png" }
         }
@@ -111,37 +111,37 @@
       "cells": [
         {
           "points": 100,
-          "clue": "Spell the name of this Spanish-founded luxury fashion house.",
+          "clue": "",
           "answer": "Balenciaga",
           "media": { "type": "image", "src": "/images/round2/balenciaga.png" }
         },
         {
           "points": 200,
-          "clue": "Spell the name of this French fashion house known by the initials YSL.",
+          "clue": "",
           "answer": "Yves Saint Laurent",
           "media": { "type": "image", "src": "/images/round2/ysl.png" }
         },
         {
           "points": 300,
-          "clue": "Spell the name of this Austrian company famous for cut crystal and rhinestones.",
+          "clue": "",
           "answer": "Swarovski",
           "media": { "type": "image", "src": "/images/round2/swarovski.png" }
         },
         {
           "points": 400,
-          "clue": "Spell the name of this French fashion house founded in 1952.",
+          "clue": "",
           "answer": "Givenchy",
           "media": { "type": "image", "src": "/images/round2/givenchy.png" }
         },
         {
           "points": 500,
-          "clue": "Spell the name of this designer famous for red-soled shoes.",
+          "clue": "",
           "answer": "Christian Louboutin",
           "media": { "type": "image", "src": "/images/round2/louboutin.png" }
         },
         {
           "points": 600,
-          "clue": "Spell the name of this Spanish luxury fashion house.",
+          "clue": "",
           "answer": "Loewe",
           "media": { "type": "image", "src": "/images/round2/loewe.jpg" }
         }
@@ -152,37 +152,37 @@
       "cells": [
         {
           "points": 100,
-          "clue": "Spell the name of this landmark Art Deco skyscraper in Midtown Manhattan.",
+          "clue": "",
           "answer": "Chrysler Building",
           "media": { "type": "image", "src": "/images/round2/chrysler.jpg" }
         },
         {
           "points": 200,
-          "clue": "Spell the name of this spiral-shaped art museum on Fifth Avenue.",
+          "clue": "",
           "answer": "Guggenheim",
           "media": { "type": "image", "src": "/images/round2/guggenheim.jpg" }
         },
         {
           "points": 300,
-          "clue": "Spell the name of this Manhattan neighborhood and elite public high school, named for a Dutch governor.",
+          "clue": "",
           "answer": "Stuyvesant",
           "media": { "type": "image", "src": "/images/round2/stuyvesant.png" }
         },
         {
           "points": 400,
-          "clue": "Spell the name of the bridge and explorer whose name appears in New York Harbor.",
+          "clue": "",
           "answer": "Verrazzano",
           "media": { "type": "image", "src": "/images/round2/verrazzano.jpeg" }
         },
         {
           "points": 500,
-          "clue": "Spell the name of this Bronx neighborhood where the Harlem River meets the Hudson.",
+          "clue": "",
           "answer": "Spuyten Duyvil",
           "media": { "type": "image", "src": "/images/round2/spuyten-duyvil.jpeg" }
         },
         {
           "points": 600,
-          "clue": "Spell the name of this bridge and Polish-American Revolutionary War hero.",
+          "clue": "",
           "answer": "Kosciuszko",
           "media": { "type": "image", "src": "/images/round2/kosciuszko.jpg" }
         }

@@ -71,43 +71,53 @@ export function JeopardyBoard<TCell extends CellLike>({
 
   const boardMax = Math.max(0, ...categories.flatMap((c) => c.cells.map((cell) => cell.points)))
 
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
-  const [boardWidth, setBoardWidth] = useState<number | null>(null)
+
+  // Layout above (picker line) and below (resolved-so-far toggle) the grid
+  // appears/disappears as the game progresses — refit whenever that changes.
+  const hasPicker = Boolean(roundState.currentPickerTeamId)
+  const hasResolved = Object.values(roundState.cells).some((c) => c.status === 'resolved')
+
+  const NATURAL_MAX_WIDTH = 1800
 
   // Cells keep a fixed aspect ratio, so a grid's height scales linearly with
-  // its width. Boards with few rows (round 1) fit fine at a wide cap; boards
-  // with many rows (round 2) don't. Measure once at natural width and, if
-  // that overflows the viewport, shrink to the exact width that doesn't —
-  // rather than picking one fixed max-width that's wrong for one round or
-  // the other.
+  // its width. Boards with few rows (round 1) fit fine at the natural cap;
+  // boards with many rows (round 2) don't. Reset to natural width, measure,
+  // and — if that overflows the viewport — shrink to the exact width that
+  // doesn't, using the page's *actual* chrome (nav, title, picker line,
+  // resolved-log toggle) rather than a guessed buffer, so it stays correct
+  // as that chrome appears and disappears during play.
   useLayoutEffect(() => {
+    const wrapper = wrapperRef.current
     const grid = gridRef.current
-    if (!grid) return
+    if (!wrapper || !grid) return
 
     function fit() {
-      if (!grid) return
+      if (!wrapper || !grid) return
+      wrapper.style.maxWidth = `${NATURAL_MAX_WIDTH}px`
+
       const headerCells = Array.from(grid.children).slice(0, categories.length) as HTMLElement[]
       const headerHeight = Math.max(0, ...headerCells.map((el) => el.getBoundingClientRect().height))
       const rect = grid.getBoundingClientRect()
       const rowsPortion = rect.height - headerHeight
       if (rowsPortion <= 0) return
 
-      // room for the "<team> picks the next board" line, which isn't always
-      // present, plus a little breathing space at the bottom of the screen
-      const BOTTOM_BUFFER = 64
-      const available = window.innerHeight - rect.top - BOTTOM_BUFFER
+      const SAFETY = 8
+      const bottomChrome = Math.max(0, document.documentElement.scrollHeight - (rect.top + rect.height))
+      const available = window.innerHeight - rect.top - bottomChrome - SAFETY
       const targetRowsPortion = available - headerHeight
-      if (targetRowsPortion >= rowsPortion) return // already fits at natural width
+      if (targetRowsPortion >= rowsPortion) return // natural width already fits
 
       const ratio = Math.max(targetRowsPortion, 0) / rowsPortion
-      setBoardWidth(Math.max(rect.width * ratio, 480))
+      wrapper.style.maxWidth = `${Math.max(rect.width * ratio, 480)}px`
     }
 
+    console.log('[fit-effect] running', { hasPicker, hasResolved })
     fit()
     window.addEventListener('resize', fit)
     return () => window.removeEventListener('resize', fit)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [categories, maxRows, hasPicker, hasResolved])
 
   const activeEntry = Object.entries(roundState.cells).find(([, v]) => v.status === 'in-play')
   const activeKey = activeEntry?.[0] ?? null
@@ -198,7 +208,7 @@ export function JeopardyBoard<TCell extends CellLike>({
   )
 
   return (
-    <div className="mx-auto" style={{ maxWidth: boardWidth != null ? `${boardWidth}px` : '1800px' }}>
+    <div ref={wrapperRef} className="mx-auto max-w-[1800px]">
       {state.teams.length === 0 && (
         <p className="text-center font-body text-lg text-ink/50 mb-3">
           No teams yet — add teams on the Setup tab before playing.
